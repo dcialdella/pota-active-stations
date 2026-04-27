@@ -2,6 +2,8 @@
 
 Dashboard que muestra las estaciones POTA activas en tiempo real en las bandas de 20m, 40m, 15m y 17m en modo SSB.
 
+![Dashboard](pota.png)
+
 ## Funcionamiento
 
 1. El script `fetch_pota.py` consulta la API pública de POTA (`https://api.pota.app/spot/activator`)
@@ -18,7 +20,7 @@ Dashboard que muestra las estaciones POTA activas en tiempo real en las bandas d
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/dcialdella/pota-active-stations.git
+git clone https://github.com/USUARIO/pota-active-stations.git
 cd pota-active-stations
 
 # Crear entorno virtual (opcional)
@@ -48,13 +50,13 @@ Esto genera el archivo `pota_active_stations.html` que podés abrir en tu navega
 crontab -e
 
 # Agregar esta linea (ajusta la ruta a tu directorio)
-*/5 * * * * /usr/bin/python3 /Users/cialdeld/Downloads/ia-pota-simple/fetch_pota.py >> /Users/cialdeld/Downloads/ia-pota-simple/fetch.log 2>&1
+*/5 * * * * /usr/bin/python3 /USUARIO/pota-active-stations/fetch_pota.py >> /USUARIO/pota-active-stations/fetch.log 2>&1
 ```
 
 Tambien podés ejecutar el shell script directamente:
 
 ```bash
-*/5 * * * * /Users/cialdeld/Downloads/ia-pota-simple/run_fetch.sh >> /Users/cialdeld/Downloads/ia-pota-simple/fetch.log 2>&1
+*/5 * * * * /USUARIO/pota-active-stations/run_fetch.sh >> /USUARIO/pota-active-stations/fetch.log 2>&1
 ```
 
 ## Archivo de salida
