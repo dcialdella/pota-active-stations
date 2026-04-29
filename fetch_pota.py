@@ -77,16 +77,23 @@ def generate_html(band_data: dict) -> str:
         tr:hover {{ background: #1f4068; }}
         .count {{ color: #00ff88; font-weight: bold; }}
         .table-wrapper {{ overflow-x: auto; -webkit-overflow-scrolling: touch; }}
+        .box {{ box-sizing: border-box; }}
 
-        @media (max-width: 768px) {{
+        @media (max-width: 480px) {{
             body {{ margin: 5px; }}
-            h1 {{ font-size: 1.2rem; }}
+            h1 {{ font-size: 1.1rem; }}
             .row {{ flex-direction: column; gap: 10px; margin-bottom: 10px; }}
-            .box {{ min-width: unset; width: 100%; padding: 10px; box-sizing: border-box; }}
+            .box {{ min-width: unset; width: 100%; padding: 8px; }}
             .row-tall .box, .row-short .box {{ max-height: none; }}
-            .box h2 {{ font-size: 1rem; }}
-            table {{ font-size: 0.75rem; }}
-            th, td {{ padding: 5px; }}
+            .box h2 {{ font-size: 0.95rem; }}
+            table {{ font-size: 0.7rem; }}
+            th, td {{ padding: 4px; }}
+        }}
+
+        @media (min-width: 481px) and (max-width: 1024px) {{
+            .box {{ min-width: 250px; }}
+            .row-tall .box {{ max-height: 45vh; }}
+            .row-short .box {{ max-height: 30vh; }}
         }}
     </style>
 </head>

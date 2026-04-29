@@ -19,22 +19,29 @@
         tr:hover { background: #1f4068; }
         .count { color: #00ff88; font-weight: bold; }
         .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .box { box-sizing: border-box; }
 
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
             body { margin: 5px; }
-            h1 { font-size: 1.2rem; }
+            h1 { font-size: 1.1rem; }
             .row { flex-direction: column; gap: 10px; margin-bottom: 10px; }
-            .box { min-width: unset; width: 100%; padding: 10px; box-sizing: border-box; }
+            .box { min-width: unset; width: 100%; padding: 8px; }
             .row-tall .box, .row-short .box { max-height: none; }
-            .box h2 { font-size: 1rem; }
-            table { font-size: 0.75rem; }
-            th, td { padding: 5px; }
+            .box h2 { font-size: 0.95rem; }
+            table { font-size: 0.7rem; }
+            th, td { padding: 4px; }
+        }
+
+        @media (min-width: 481px) and (max-width: 1024px) {
+            .box { min-width: 250px; }
+            .row-tall .box { max-height: 45vh; }
+            .row-short .box { max-height: 30vh; }
         }
     </style>
 </head>
 <body>
     <h1>POTA Active Stations - SSB</h1>
-    <p class="timestamp">Generated: 2026-04-29T08:36:11.386172</p>
+    <p class="timestamp">Generated: 2026-04-29T08:44:19.523686</p>
     <div class="row row-tall">
 
         <div class="box">
@@ -48,13 +55,11 @@
         </div>
 
         <div class="box">
-            <h2>40M - <span class="count">4 stations</span></h2>
+            <h2>40M - <span class="count">2 stations</span></h2>
             <div class="table-wrapper">
             <table>
                 <tr><th>Activator</th><th>Reference</th><th>Frequency</th><th>Mode</th><th>Park Name</th><th>Location</th></tr>
-                <tr><td>JH1HGF/1</td><td>JP-1171</td><td><b style='color:red'>7006.0</b></td><td>SSB</td><td>Kukisyobu Prefectural Park</td><td>JP-ST</td></tr>
                 <tr><td>F5NLX/P</td><td>FR-4140</td><td><b style='color:red'>7097.0</b></td><td>SSB</td><td>CorbiEres occidentales Natura 2000</td><td>FR-OCC</td></tr>
-                <tr><td>VK4EMP</td><td>AU-10502</td><td><b style='color:red'>7144.0</b></td><td>SSB</td><td>Lachlan National Wild and Scenic River</td><td>AU-NSW</td></tr>
                 <tr><td>JK1TBL/1</td><td>JP-1812</td><td><b style='color:red'>7166.0</b></td><td>SSB</td><td>Tokyo Port Wild Bird Prefectural Park</td><td>JP-TK</td></tr>
 
             </table>
