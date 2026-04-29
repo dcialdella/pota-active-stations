@@ -13,3 +13,5 @@ source "$VENV_DIR/bin/activate"
 
 echo "Running POTA fetcher..."
 python3 "$SCRIPT_DIR/fetch_pota.py"
+
+cp "$SCRIPT_DIR"/*html /var/www/html
