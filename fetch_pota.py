@@ -63,19 +63,31 @@ def generate_html(band_data: dict) -> str:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POTA Active Stations - SSB</title>
     <style>
-        body {{ font-family: Arial, sans-serif; margin: 20px; background: #1a1a2e; color: #eee; }}
-        h1 {{ text-align: center; color: #00ff88; }}
-        .timestamp {{ text-align: center; color: #888; margin-bottom: 20px; }}
-        .row {{ display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }}
-        .box {{ flex: 1; min-width: 400px; background: #16213e; border-radius: 10px; padding: 15px; }}
+        body {{ font-family: Arial, sans-serif; margin: 10px; background: #1a1a2e; color: #eee; }}
+        h1 {{ text-align: center; color: #00ff88; font-size: 1.5rem; }}
+        .timestamp {{ text-align: center; color: #888; margin-bottom: 15px; font-size: 0.9rem; }}
+        .row {{ display: flex; gap: 15px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }}
+        .box {{ flex: 1; min-width: 300px; background: #16213e; border-radius: 10px; padding: 12px; }}
         .row-tall .box {{ max-height: 50vh; overflow-y: auto; }}
         .row-short .box {{ max-height: 33vh; overflow-y: auto; }}
-        .box h2 {{ margin-top: 0; color: #00ff88; border-bottom: 2px solid #00ff88; padding-bottom: 10px; }}
-        table {{ width: 100%; border-collapse: collapse; }}
-        th {{ background: #0f3460; padding: 10px; text-align: left; }}
-        td {{ padding: 8px; border-bottom: 1px solid #333; }}
+        .box h2 {{ margin-top: 0; color: #00ff88; border-bottom: 2px solid #00ff88; padding-bottom: 8px; font-size: 1.2rem; }}
+        table {{ width: 100%; border-collapse: collapse; font-size: 0.85rem; }}
+        th {{ background: #0f3460; padding: 8px; text-align: left; white-space: nowrap; }}
+        td {{ padding: 6px; border-bottom: 1px solid #333; white-space: nowrap; }}
         tr:hover {{ background: #1f4068; }}
         .count {{ color: #00ff88; font-weight: bold; }}
+        .table-wrapper {{ overflow-x: auto; -webkit-overflow-scrolling: touch; }}
+
+        @media (max-width: 768px) {{
+            body {{ margin: 5px; }}
+            h1 {{ font-size: 1.2rem; }}
+            .row {{ flex-direction: column; gap: 10px; margin-bottom: 10px; }}
+            .box {{ min-width: unset; width: 100%; padding: 10px; box-sizing: border-box; }}
+            .row-tall .box, .row-short .box {{ max-height: none; }}
+            .box h2 {{ font-size: 1rem; }}
+            table {{ font-size: 0.75rem; }}
+            th, td {{ padding: 5px; }}
+        }}
     </style>
 </head>
 <body>
@@ -89,6 +101,7 @@ def generate_html(band_data: dict) -> str:
         html += f"""
         <div class="box">
             <h2>{band.upper()} - <span class="count">{len(spots)} stations</span></h2>
+            <div class="table-wrapper">
             <table>
                 <tr><th>Activator</th><th>Reference</th><th>Frequency</th><th>Mode</th><th>Park Name</th><th>Location</th></tr>
 """
@@ -96,6 +109,7 @@ def generate_html(band_data: dict) -> str:
             html += f"                {format_station_row(spot)}\n"
         html += """
             </table>
+            </div>
         </div>
 """
     html += '    </div>\n'
@@ -107,6 +121,7 @@ def generate_html(band_data: dict) -> str:
         html += f"""
         <div class="box">
             <h2>{band.upper()} - <span class="count">{len(spots)} stations</span></h2>
+            <div class="table-wrapper">
             <table>
                 <tr><th>Activator</th><th>Reference</th><th>Frequency</th><th>Mode</th><th>Park Name</th><th>Location</th></tr>
 """
@@ -114,6 +129,7 @@ def generate_html(band_data: dict) -> str:
             html += f"                {format_station_row(spot)}\n"
         html += """
             </table>
+            </div>
         </div>
 """
     html += '    </div>\n'
