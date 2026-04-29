@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POTA Active Stations - SSB</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 10px; background: #1a1a2e; color: #eee; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; margin: 10px; background: #1a1a2e; color: #eee; overflow-x: hidden; max-width: 100vw; }
         h1 { text-align: center; color: #00ff88; font-size: 1.5rem; }
         .timestamp { text-align: center; color: #888; margin-bottom: 15px; font-size: 0.9rem; }
         .row { display: flex; gap: 15px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
@@ -14,22 +15,36 @@
         .row-short .box { max-height: 33vh; overflow-y: auto; }
         .box h2 { margin-top: 0; color: #00ff88; border-bottom: 2px solid #00ff88; padding-bottom: 8px; font-size: 1.2rem; }
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th { background: #0f3460; padding: 8px; text-align: left; white-space: nowrap; }
-        td { padding: 6px; border-bottom: 1px solid #333; white-space: nowrap; }
+        th { background: #0f3460; padding: 8px; text-align: left; }
+        td { padding: 6px 8px; border-bottom: 1px solid #333; }
         tr:hover { background: #1f4068; }
         .count { color: #00ff88; font-weight: bold; }
-        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .box { box-sizing: border-box; }
+        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; max-width: 100%; }
+
+        .act-ref-cell, .freq-mode-cell { display: flex; flex-direction: column; }
+        .act-label { font-weight: bold; color: #00ff88; }
+        .ref-label { font-size: 0.85em; color: #aaa; }
+        .freq-label { font-weight: bold; color: #e74c3c; }
+        .mode-label { font-size: 0.85em; color: #aaa; }
+        .park-label { white-space: normal; word-break: break-word; }
+
+        .col-act-ref { min-width: 120px; }
+        .col-freq-mode { min-width: 100px; }
+        .col-park { min-width: 200px; }
 
         @media (max-width: 480px) {
-            body { margin: 5px; }
+            body { margin: 5px; padding: 0; }
             h1 { font-size: 1.1rem; }
             .row { flex-direction: column; gap: 10px; margin-bottom: 10px; }
-            .box { min-width: unset; width: 100%; padding: 8px; }
-            .row-tall .box, .row-short .box { max-height: none; }
-            .box h2 { font-size: 0.95rem; }
-            table { font-size: 0.7rem; }
-            th, td { padding: 4px; }
+            .box { min-width: unset; width: 100%; padding: 6px; }
+            .row-tall .box, .row-short .box { max-height: none; overflow-y: visible; }
+            .box h2 { font-size: 0.95rem; padding-bottom: 5px; }
+            table { font-size: 0.78rem; }
+            th { padding: 5px 4px; }
+            td { padding: 5px 4px; }
+            .col-act-ref { min-width: 0; }
+            .col-freq-mode { min-width: 0; }
+            .col-park { min-width: 0; }
         }
 
         @media (min-width: 481px) and (max-width: 1024px) {
@@ -41,14 +56,20 @@
 </head>
 <body>
     <h1>POTA Active Stations - SSB</h1>
-    <p class="timestamp">Generated: 2026-04-29T08:44:19.523686</p>
+    <p class="timestamp">Generated: 2026-04-29T17:56:29.962458</p>
     <div class="row row-tall">
 
         <div class="box">
-            <h2>20M - <span class="count">0 stations</span></h2>
+            <h2>20M - <span class="count">6 stations</span></h2>
             <div class="table-wrapper">
             <table>
-                <tr><th>Activator</th><th>Reference</th><th>Frequency</th><th>Mode</th><th>Park Name</th><th>Location</th></tr>
+                <tr><th>Activator</th><th>Frequency</th><th>Park Name</th></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">M0OEM/P</span><span class="ref-label">GB-0003</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14157.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">North York Moors National Park</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">G5RFJ</span><span class="ref-label">GB-6444</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14160.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Broomfield Nature Conservation Park</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">DK9LP</span><span class="ref-label">DE-0020</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14185.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Neckartal-Odenwald Nature Park</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">OE/IU2QBL</span><span class="ref-label">AT-0002</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14205.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Vienna Prater Recreation Park</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">VA5MUD</span><span class="ref-label">CA-6342</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14225.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Buffalo Rubbing Stone Historic Site</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">F8DVD/P</span><span class="ref-label">FR-15066</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14305.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">LA GRANDE CHASSAIGNE Biological Reserve</span></td></tr>
 
             </table>
             </div>
@@ -58,9 +79,9 @@
             <h2>40M - <span class="count">2 stations</span></h2>
             <div class="table-wrapper">
             <table>
-                <tr><th>Activator</th><th>Reference</th><th>Frequency</th><th>Mode</th><th>Park Name</th><th>Location</th></tr>
-                <tr><td>F5NLX/P</td><td>FR-4140</td><td><b style='color:red'>7097.0</b></td><td>SSB</td><td>CorbiEres occidentales Natura 2000</td><td>FR-OCC</td></tr>
-                <tr><td>JK1TBL/1</td><td>JP-1812</td><td><b style='color:red'>7166.0</b></td><td>SSB</td><td>Tokyo Port Wild Bird Prefectural Park</td><td>JP-TK</td></tr>
+                <tr><th>Activator</th><th>Frequency</th><th>Park Name</th></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">DL5APW</span><span class="ref-label">DE-0063</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7143.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Niederlausitzer Heidelandschaft Nature Park</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">M7EFA</span><span class="ref-label">GB-0128</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7163.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Alice Holt Royal Forest</span></td></tr>
 
             </table>
             </div>
@@ -69,11 +90,10 @@
     <div class="row row-short">
 
         <div class="box">
-            <h2>15M - <span class="count">1 stations</span></h2>
+            <h2>15M - <span class="count">0 stations</span></h2>
             <div class="table-wrapper">
             <table>
-                <tr><th>Activator</th><th>Reference</th><th>Frequency</th><th>Mode</th><th>Park Name</th><th>Location</th></tr>
-                <tr><td>JA1IOR/1</td><td>JP-1193</td><td><b style='color:red'>21300.0</b></td><td>SSB</td><td>Makuhari Seaside Prefectural Park</td><td>JP-CH</td></tr>
+                <tr><th>Activator</th><th>Frequency</th><th>Park Name</th></tr>
 
             </table>
             </div>
@@ -83,7 +103,7 @@
             <h2>17M - <span class="count">0 stations</span></h2>
             <div class="table-wrapper">
             <table>
-                <tr><th>Activator</th><th>Reference</th><th>Frequency</th><th>Mode</th><th>Park Name</th><th>Location</th></tr>
+                <tr><th>Activator</th><th>Frequency</th><th>Park Name</th></tr>
 
             </table>
             </div>
