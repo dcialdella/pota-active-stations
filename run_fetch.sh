@@ -1,17 +1,18 @@
 #!/bin/bash
-# Run POTA station fetcher - uses curl to bypass SSL issues
+# Fetch POTA stations and publish the dashboard to the web root.
+# Override the destination with PUBLISH_DIR=/some/path ./run_fetch.sh
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-VENV_DIR="$SCRIPT_DIR/.venv"
+PUBLISH_DIR="${PUBLISH_DIR:-/var/www/html}"
+DASHBOARD="$SCRIPT_DIR/pota_active_stations.html"
 
-if [ ! -d "$VENV_DIR" ]; then
-    echo "Creating virtual environment..."
-    python3 -m venv "$VENV_DIR"
-fi
-
-source "$VENV_DIR/bin/activate"
-
-echo "Running POTA fetcher..."
+# No virtualenv needed: fetch_pota.py only uses the standard library.
 python3 "$SCRIPT_DIR/fetch_pota.py"
 
-cp "$SCRIPT_DIR"/*html /var/www/html
+if [ -d "$PUBLISH_DIR" ] && [ -w "$PUBLISH_DIR" ]; then
+    cp "$DASHBOARD" "$PUBLISH_DIR/"
+    echo "Published to $PUBLISH_DIR/$(basename "$DASHBOARD")"
+else
+    echo "WARNING: $PUBLISH_DIR is not a writable directory, skipping publish" >&2
+fi

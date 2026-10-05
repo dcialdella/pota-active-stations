@@ -5,84 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POTA Active Stations - SSB</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; margin: 10px; background: #1a1a2e; color: #eee; overflow-x: hidden; max-width: 100vw; }
-        h1 { text-align: center; color: #00ff88; font-size: 1.5rem; }
-        .timestamp { text-align: center; color: #888; margin-bottom: 15px; font-size: 0.9rem; }
-        .row { display: flex; gap: 15px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
-        .box { flex: 1; min-width: 300px; background: #16213e; border-radius: 10px; padding: 12px; }
-        .row-tall .box { max-height: 50vh; overflow-y: auto; }
-        .row-short .box { max-height: 33vh; overflow-y: auto; }
-        .box h2 { margin-top: 0; color: #00ff88; border-bottom: 2px solid #00ff88; padding-bottom: 8px; font-size: 1.2rem; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th { background: #0f3460; padding: 8px; text-align: left; }
-        td { padding: 6px 8px; border-bottom: 1px solid #333; }
-        tr:hover { background: #1f4068; }
-        .count { color: #00ff88; font-weight: bold; }
-        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; max-width: 100%; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: Arial, sans-serif; margin: 10px; background: #1a1a2e;
+        color: #eee; overflow-x: hidden; max-width: 100%;
+    }
+    h1 { text-align: center; color: #00ff88; font-size: 1.5rem; }
+    .timestamp { text-align: center; color: #888; margin-bottom: 15px; font-size: 0.9rem; }
+    .timestamp.stale { color: #e74c3c; font-weight: bold; }
+    .row {
+        display: flex; gap: 15px; justify-content: center;
+        margin-bottom: 15px; flex-wrap: wrap;
+    }
+    .box { flex: 1; min-width: 300px; background: #16213e; border-radius: 10px; padding: 12px; }
+    .row-tall .box { max-height: 50vh; overflow-y: auto; }
+    .row-short .box { max-height: 33vh; overflow-y: auto; }
+    .box h2 {
+        margin-top: 0; color: #00ff88; border-bottom: 2px solid #00ff88;
+        padding-bottom: 8px; font-size: 1.2rem;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    thead th { background: #0f3460; padding: 8px; text-align: left; position: sticky; top: 0; }
+    tbody td { padding: 6px 8px; border-bottom: 1px solid #333; }
+    tbody tr:hover { background: #1f4068; }
+    .count { color: #00ff88; font-weight: bold; }
+    .table-wrapper {
+        overflow: auto; -webkit-overflow-scrolling: touch;
+        width: 100%; max-width: 100%;
+    }
 
-        .act-ref-cell, .freq-mode-cell { display: flex; flex-direction: column; }
-        .act-label { font-weight: bold; color: #00ff88; }
-        .ref-label { font-size: 0.85em; color: #aaa; }
-        .freq-label { font-weight: bold; color: #e74c3c; }
-        .mode-label { font-size: 0.85em; color: #aaa; }
-        .park-label { white-space: normal; word-break: break-word; }
+    .act-ref-cell, .freq-mode-cell { display: flex; flex-direction: column; }
+    .act-label { font-weight: bold; color: #00ff88; }
+    .ref-label { font-size: 0.85em; color: #aaa; }
+    .freq-label { font-weight: bold; color: #e74c3c; }
+    .mode-label { font-size: 0.85em; color: #aaa; }
+    .park-label { white-space: normal; word-break: break-word; }
+    .empty { color: #777; font-style: italic; text-align: center; padding: 14px 8px; }
 
-        .col-act-ref { min-width: 120px; }
-        .col-freq-mode { min-width: 100px; }
-        .col-park { min-width: 200px; }
+    .col-act-ref { min-width: 120px; }
+    .col-freq-mode { min-width: 100px; }
+    .col-park { min-width: 200px; }
 
-        @media (max-width: 480px) {
-            body { margin: 5px; padding: 0; }
-            h1 { font-size: 1.1rem; }
-            .row { flex-direction: column; gap: 10px; margin-bottom: 10px; }
-            .box { min-width: unset; width: 100%; padding: 6px; }
-            .row-tall .box, .row-short .box { max-height: none; overflow-y: visible; }
-            .box h2 { font-size: 0.95rem; padding-bottom: 5px; }
-            table { font-size: 0.78rem; }
-            th { padding: 5px 4px; }
-            td { padding: 5px 4px; }
-            .col-act-ref { min-width: 0; }
-            .col-freq-mode { min-width: 0; }
-            .col-park { min-width: 0; }
-        }
+    @media (max-width: 480px) {
+        body { margin: 5px; padding: 0; }
+        h1 { font-size: 1.1rem; }
+        .row { flex-direction: column; gap: 10px; margin-bottom: 10px; }
+        .box { min-width: unset; width: 100%; padding: 6px; }
+        .row-tall .box, .row-short .box { max-height: none; overflow-y: visible; }
+        .box h2 { font-size: 0.95rem; padding-bottom: 5px; }
+        table { font-size: 0.78rem; }
+        thead th { padding: 5px 4px; }
+        tbody td { padding: 5px 4px; }
+        .col-act-ref { min-width: 0; }
+        .col-freq-mode { min-width: 0; }
+        .col-park { min-width: 0; }
+    }
 
-        @media (min-width: 481px) and (max-width: 1024px) {
-            .box { min-width: 250px; }
-            .row-tall .box { max-height: 45vh; }
-            .row-short .box { max-height: 30vh; }
-        }
+    @media (min-width: 481px) and (max-width: 1024px) {
+        .box { min-width: 250px; }
+        .row-tall .box { max-height: 45vh; }
+        .row-short .box { max-height: 30vh; }
+    }
     </style>
 </head>
 <body>
     <h1>POTA Active Stations - SSB</h1>
-    <p class="timestamp">Generated: 2026-04-29T17:56:29.962458</p>
+    <p class="timestamp">Generated: 2026-10-05T13:45:54+02:00</p>
     <div class="row row-tall">
 
         <div class="box">
             <h2>20M - <span class="count">6 stations</span></h2>
             <div class="table-wrapper">
             <table>
-                <tr><th>Activator</th><th>Frequency</th><th>Park Name</th></tr>
-                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">M0OEM/P</span><span class="ref-label">GB-0003</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14157.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">North York Moors National Park</span></td></tr>
-                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">G5RFJ</span><span class="ref-label">GB-6444</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14160.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Broomfield Nature Conservation Park</span></td></tr>
-                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">DK9LP</span><span class="ref-label">DE-0020</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14185.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Neckartal-Odenwald Nature Park</span></td></tr>
-                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">OE/IU2QBL</span><span class="ref-label">AT-0002</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14205.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Vienna Prater Recreation Park</span></td></tr>
-                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">VA5MUD</span><span class="ref-label">CA-6342</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14225.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Buffalo Rubbing Stone Historic Site</span></td></tr>
-                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">F8DVD/P</span><span class="ref-label">FR-15066</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14305.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">LA GRANDE CHASSAIGNE Biological Reserve</span></td></tr>
-
+                <thead><tr>
+                    <th scope="col">Activator</th>
+                    <th scope="col">Frequency</th>
+                    <th scope="col">Park Name</th>
+                </tr></thead>
+                <tbody>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">CS7BOG</span><span class="ref-label">PT-0330</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14148.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">MATA NACIONAL DE LEIRIA National Forest</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">DM5QM</span><span class="ref-label">DE-0068</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14155.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Niederlausitzer Landruecken Nature Park</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">SA4GWT</span><span class="ref-label">SE-0059</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14280.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Koppången Nature Reserve</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">CU2GI</span><span class="ref-label">PT-0165</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14298.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Reserva Natural da Lagoa do Fogo Nature Reserve</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">CU2JX</span><span class="ref-label">PT-0165</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14298.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Reserva Natural da Lagoa do Fogo Nature Reserve</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">F4MPJ/P</span><span class="ref-label">FR-7125</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">14333.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">BOIS DE VINCENNES Biological Reserve</span></td></tr>
+                </tbody>
             </table>
             </div>
         </div>
 
         <div class="box">
-            <h2>40M - <span class="count">2 stations</span></h2>
+            <h2>40M - <span class="count">5 stations</span></h2>
             <div class="table-wrapper">
             <table>
-                <tr><th>Activator</th><th>Frequency</th><th>Park Name</th></tr>
-                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">DL5APW</span><span class="ref-label">DE-0063</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7143.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Niederlausitzer Heidelandschaft Nature Park</span></td></tr>
-                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">M7EFA</span><span class="ref-label">GB-0128</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7163.0</span><span class="mode-label">SSB</span></div></td><td><span class="park-label">Alice Holt Royal Forest</span></td></tr>
-
+                <thead><tr>
+                    <th scope="col">Activator</th>
+                    <th scope="col">Frequency</th>
+                    <th scope="col">Park Name</th>
+                </tr></thead>
+                <tbody>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">EA5KDS</span><span class="ref-label">ES-1017</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7122.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Riu Xuquer Natura 2000</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">IU0UYY</span><span class="ref-label">IT-1229</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7135.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Palude di Torre Flavia Natural Monument</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">PA/DK7OEL</span><span class="ref-label">NL-0195</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7145.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Gees Nature Park</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">M7WLT/P</span><span class="ref-label">GB-1303</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7194.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Blakehill Farm Nature Reserve</span></td></tr>
+                <tr><td class="col-act-ref"><div class="act-ref-cell"><span class="act-label">M7EFA</span><span class="ref-label">GB-6616</span></div></td><td class="col-freq-mode"><div class="freq-mode-cell"><span class="freq-label">7195.0</span><span class="mode-label">SSB</span></div></td><td class="col-park"><span class="park-label">Hayling Billy National Scenic Trail</span></td></tr>
+                </tbody>
             </table>
             </div>
         </div>
@@ -93,8 +120,14 @@
             <h2>15M - <span class="count">0 stations</span></h2>
             <div class="table-wrapper">
             <table>
-                <tr><th>Activator</th><th>Frequency</th><th>Park Name</th></tr>
-
+                <thead><tr>
+                    <th scope="col">Activator</th>
+                    <th scope="col">Frequency</th>
+                    <th scope="col">Park Name</th>
+                </tr></thead>
+                <tbody>
+                <tr><td class="empty" colspan="3">No stations</td></tr>
+                </tbody>
             </table>
             </div>
         </div>
@@ -103,12 +136,17 @@
             <h2>17M - <span class="count">0 stations</span></h2>
             <div class="table-wrapper">
             <table>
-                <tr><th>Activator</th><th>Frequency</th><th>Park Name</th></tr>
-
+                <thead><tr>
+                    <th scope="col">Activator</th>
+                    <th scope="col">Frequency</th>
+                    <th scope="col">Park Name</th>
+                </tr></thead>
+                <tbody>
+                <tr><td class="empty" colspan="3">No stations</td></tr>
+                </tbody>
             </table>
             </div>
         </div>
     </div>
-
 </body>
 </html>
