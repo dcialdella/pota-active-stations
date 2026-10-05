@@ -47,12 +47,14 @@ Esto genera el archivo `pota_active_stations.html` que podés abrir en tu navega
 
 El script devuelve `0` si pudo actualizar el dashboard y `1` si fallo, para que cron lo detecte. Ante un fallo de red reintenta 3 veces y, si tampoco funciona, **deja el HTML anterior intacto** en vez de publicarlo vacio.
 
-## Ejecucion automatica con cron (cada 5 minutos)
+## Ejecucion automatica con cron
+
+En el servidor el job corre cada 4 minutos. Adaptar el intervalo al tuyo:
 
 ```bash
 crontab -e
 
-*/5 * * * * /ruta/a/pota-active-stations/run_fetch.sh >> /ruta/a/pota-active-stations/fetch.log 2>&1
+*/4 * * * * /ruta/a/pota-active-stations/run_fetch.sh >> /ruta/a/pota-active-stations/run.log 2>&1
 ```
 
 El script no depende del directorio de trabajo: resuelve las rutas a partir de su propia ubicacion, asi que funciona igual desde cron.
